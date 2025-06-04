@@ -31,11 +31,13 @@ set_target_properties(${MODULE_NAME} PROPERTIES
 target_include_directories(${MODULE_NAME} PUBLIC
     ${INCLUDE_DIR}/${MODULE_NAME}
     inc
+
+    ${THIRD_DIR}/spdlog/include
 )
 
 # set the link dependencies of the module
 target_link_libraries(${MODULE_NAME} PUBLIC
-
+    spdlog
 )
 
 # set the install rules of the module

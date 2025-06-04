@@ -34,7 +34,7 @@ target_include_directories(${MODULE_NAME} PUBLIC
 
 # set the link dependencies of the module
 target_link_libraries(${MODULE_NAME} PUBLIC
-
+    basic
 )
 
 # set the install rules of the module

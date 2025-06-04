@@ -2,8 +2,18 @@
 
 #define PRJ_NAME Accum
 
+#ifdef _WIN32
 #define _DLL_EXPORT __declspec(dllexport)
+#else
+#define _DLL_EXPORT __attribute__((visibility("default")))
+#endif
+
+#ifdef _WIN32
 #define _DLL_IMPORT __declspec(dllimport)
+#else
+#define _DLL_IMPORT __attribute__((visibility("default")))
+#endif
+
 #define _DLL_C_EXPORT extern "C"
 #define _DLL_C_IMPORT extern "C"
 
@@ -15,7 +25,7 @@
 #define SAFE_DELETE(_POINTER)   \
     do                          \
     {                           \
-        if (_POINRTER)          \
+        if (_POINTER)           \
         {                       \
             delete _POINTER;    \
             _POINTER = nullptr; \
@@ -34,12 +44,12 @@
         }                           \
     } while (0)
 
-#define INSTANCE(_CLASS, ...)                           \
-public:                                                 \
-    static _CLASS &instance()                           \
-    {                                                   \
-        static _CLASS *ins = new _CLASS(##__VA_ARGS__); \
-        return *ins;                                    \
+#define INSTANCE(_CLASS, ...)                         \
+public:                                               \
+    static _CLASS &instance()                         \
+    {                                                 \
+        static _CLASS *ins = new _CLASS(__VA_ARGS__); \
+        return *ins;                                  \
     }
 #define GET_INSTNACE(_CLASS) _CLASS::instance()
 
@@ -58,7 +68,7 @@ public:                                              \
     _TYPE &_NAME() { return m_##_NAME; }             \
                                                      \
 protected:                                           \
-    _TYPE m_##_NAME = {##__VA_ARGS__}
+    _TYPE m_##_NAME = {__VA_ARGS__}
 
 #define REFERENCE_MEMBER_DECLARE(_CLASS, _TYPE, _NAME) \
 public:                                                \

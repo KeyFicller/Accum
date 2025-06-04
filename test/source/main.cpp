@@ -1,16 +1,13 @@
-#include "basic_guard.h"
+#include "basic_log.h"
 
 #include <iostream>
 
+using namespace PRJ_NAME;
+
 int main()
 {
-    int a = 0;
-    std::cout << a << std::endl;
-
-    {
-        VALUE_REVERTER(a, 2);
-        std::cout << a << std::endl;
-    }
-
-    std::cout << a << std::endl;
+    PRJ_NAME::log::instance().trace("hello");
+    PRJ_NAME::log::instance().warn("world");
+    PRJ_NAME::log::instance().trace("%d%d", 2, 3);
+    while (true);
 }
