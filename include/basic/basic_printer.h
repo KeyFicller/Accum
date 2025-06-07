@@ -12,14 +12,16 @@ namespace PRJ_NAME
 {
 
     template <typename ...args>
-    std::string c_style_print(const char* _format, args&&... _args)
+    std::string cstyle_format_print(const char* _format, args&&... _args)
     {
         char buffer[PRINTER_BUFFER_SIZE];
         snprintf(buffer, PRINTER_BUFFER_SIZE, _format, std::forward<args>(_args)...);
         return buffer;
     }
 
-    namespace printer
+    template <typename t>
+    std::string print(const t& _value)
     {
+        return {};
     }
 }

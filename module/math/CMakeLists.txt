@@ -1,9 +1,9 @@
 # set the name of the module
-set(MODULE_NAME test)
+set(MODULE_NAME math)
 
 # set the public headers of the module
-file(GLOB_RECURSE PUB_HEADERS
-    
+file(GLOB_RECURSE PUB_HEADERS CONFIGURE_DEPENDS
+    ${INCLUDE_DIR}/${MODULE_NAME}/**.h
 )
 
 # set the private headers of the module
@@ -17,7 +17,7 @@ file(GLOB_RECURSE SOURCES CONFIGURE_DEPENDS
 )
 
 # set the target of the module
-add_executable(${MODULE_NAME} ${SOURCES} ${PUB_HEADERS} ${PRI_HEADERS})
+add_library(${MODULE_NAME} ${SOURCES} ${PUB_HEADERS} ${PRI_HEADERS})
 
 # set the properties of the module
 set_target_properties(${MODULE_NAME} PROPERTIES
@@ -29,21 +29,15 @@ set_target_properties(${MODULE_NAME} PROPERTIES
 
 # set the include directories of the module
 target_include_directories(${MODULE_NAME} PUBLIC
-    ${INCLUDE_DIR}/basic
-    ${INCLUDE_DIR}/math
+    ${INCLUDE_DIR}/${MODULE_NAME}
     inc
-    repository
 
-    ${THIRD_DIR}/googletest/googletest
-    ${THIRD_DIR}/googletest/googletest/include
+    ${INCLUDE_DIR}/basic
 )
 
 # set the link dependencies of the module
 target_link_libraries(${MODULE_NAME} PUBLIC
     basic
-    math
-
-    gtest
 )
 
 # set the install rules of the module

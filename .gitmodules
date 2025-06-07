@@ -1,3 +1,6 @@
 [submodule "third/spdlog"]
 	path = third/spdlog
 	url = git@git.zhlh6.cn:KeyFicller/spdlog.git
+[submodule "third/googletest"]
+	path = third/googletest
+	url = git@git.zhlh6.cn:KeyFicller/googletest.git

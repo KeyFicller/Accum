@@ -1,13 +1,15 @@
-#include "basic_log.h"
-
-#include <iostream>
+#include "tests.h"
 
 using namespace PRJ_NAME;
 
-int main()
+int main(int _argc, char** _argv)
 {
-    PRJ_NAME::log::instance().trace("hello");
-    PRJ_NAME::log::instance().warn("world");
-    PRJ_NAME::log::instance().trace("%d%d", 2, 3);
-    while (true);
+    printf("Running main() from %s\n", __FILE__);
+    testing::InitGoogleTest(&_argc, _argv);
+
+    vec2_i test(1, 2);
+    vec3_i test1;
+    vec4_i test2;
+
+    return RUN_ALL_TESTS();
 }

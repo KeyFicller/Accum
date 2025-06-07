@@ -51,8 +51,20 @@ namespace PRJ_NAME
         template <typename ...args>
         void trace(const std::string& _format, args&&... _args)
         {
-            return trace(c_style_print(_format.c_str(), std::forward<args>(_args)...));
+            return trace(cstyle_format_print(_format.c_str(), std::forward<args>(_args)...));
+        }
+
+        template <typename ...args>
+        void error(const std::string& _format, args&&... _args)
+        {
+            return error(cstyle_format_print(_format.c_str(), std::forward<args>(_args)...));
         }
     };
     
 }
+
+#define TRACE(...)  ::PRJ_NAME::log::instance().trace(__VA_ARGS__)
+#define INFO(...)  ::PRJ_NAME::log::instance().info(__VA_ARGS__)
+#define WARN(...)  ::PRJ_NAME::log::instance().warn(__VA_ARGS__)
+#define ERROR(...)  ::PRJ_NAME::log::instance().error(__VA_ARGS__)
+#define CRITICAL(...)  ::PRJ_NAME::log::instance().critical(__VA_ARGS__)

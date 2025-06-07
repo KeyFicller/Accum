@@ -1,5 +1,7 @@
 #pragma once
 
+#include "basic_compile.h"
+
 #define PRJ_NAME Accum
 
 #ifdef _WIN32
