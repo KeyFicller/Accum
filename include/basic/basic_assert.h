@@ -4,13 +4,26 @@
 
 #include <string>
 #include <filesystem>
+#include <exception>
 
-#define _BREAK_IN_ASSERT 1
+#define _BREAK_IN_ASSERT 0
 
 #if _BREAK_IN_ASSERT
+#ifdef COMPILE_MSVC
+#define _ASSERT_BREAK __debugbreak()
+#else
 #define _ASSERT_BREAK __builtin_trap()
+#endif
 #else
 #define _ASSERT_BREAK
+#endif
+
+#define _THORW_IN_ASSERT 1
+
+#if _THORW_IN_ASSERT
+#define _ASSERT_THROW throw std::exception()
+#else
+#define _ASSERT_THROW
 #endif
 
 #define _ASSERT_INTERNAL(_CONDITION, ...) \
@@ -19,6 +32,7 @@
         if (!(_CONDITION))                \
         {                                 \
             ERROR(__VA_ARGS__);           \
+            _ASSERT_THROW;                \
             _ASSERT_BREAK;                \
         }                                 \
     } while (0)
