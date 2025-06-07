@@ -89,3 +89,5 @@ protected:                                             \
 private:                                   \
     _CLASS(const _CLASS &_other) = delete; \
     _CLASS &operator=(const _CLASS &_other) = delete
+
+#define PRINTER_BUFFER_SIZE 256

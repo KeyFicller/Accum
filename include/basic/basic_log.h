@@ -2,13 +2,20 @@
 
 #include "basic_export.h"
 #include "basic_implment.h"
-#include "basic_printer.h"
 
 #include <string>
 
 namespace PRJ_NAME
 {
     class log_impl;
+
+    template <typename... args>
+    std::string cstyle_format_print(const char *_format, args &&..._args)
+    {
+        char buffer[PRINTER_BUFFER_SIZE];
+        snprintf(buffer, PRINTER_BUFFER_SIZE, _format, std::forward<args>(_args)...);
+        return buffer;
+    }
 
     class BASIC_EXPORT log
     {

@@ -2,6 +2,7 @@
 
 #include "basic_log.h"
 
+#include <string>
 #include <filesystem>
 
 #define _BREAK_IN_ASSERT 1
