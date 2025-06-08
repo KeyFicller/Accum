@@ -4,3 +4,4 @@
 #include "basic_prefab_test.h"
 #include "basic_filer_test.h"
 #include "math_static_vector_test.h"
+#include "math_static_matrix_test.h"

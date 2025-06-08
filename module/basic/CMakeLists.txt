@@ -33,11 +33,13 @@ target_include_directories(${MODULE_NAME} PUBLIC
     inc
 
     ${THIRD_DIR}/spdlog/include
+    ${THIRD_DIR}/tracy/public
 )
 
 # set the link dependencies of the module
 target_link_libraries(${MODULE_NAME} PUBLIC
     spdlog
+    TracyClient
 )
 
 # set the install rules of the module

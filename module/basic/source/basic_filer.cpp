@@ -1,6 +1,8 @@
 #include "basic_filer.h"
 #include "basic_filer_impl.h"
 
+#include "tracy/Tracy.hpp"
+
 namespace PRJ_NAME
 {
     filer::filer()
@@ -20,6 +22,7 @@ namespace PRJ_NAME
 
     filer &filer::read_bytes(void *_value, int _bytes)
     {
+        ZoneScoped;
         return IMPL(filer)->read_bytes(_value, _bytes);
     }
 
