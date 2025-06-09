@@ -65,7 +65,7 @@ public:                                              \
     {                                                \
         m_##_NAME = _NAME;                           \
         return *this;                                \
-    };                                               \
+    }                                                \
     const _TYPE &_NAME() const { return m_##_NAME; } \
     _TYPE &_NAME() { return m_##_NAME; }             \
                                                      \
@@ -78,7 +78,7 @@ public:                                                \
     {                                                  \
         m_##_NAME = _NAME;                             \
         return *this;                                  \
-    };                                                 \
+    }                                                  \
     const _TYPE &_NAME() const { return m_##_NAME; }   \
     _TYPE &_NAME() { return m_##_NAME; }               \
                                                        \

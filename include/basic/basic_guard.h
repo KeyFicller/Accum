@@ -11,13 +11,13 @@ namespace PRJ_NAME
         MEMBER_DECLARE(guard, callback_t<void>, leave_func);
 
     public:
-        explicit guard(const callback_t<void> &_enter, const callback_t<void> &_leave)
-            : m_enter_func(_enter), m_leave_func(_leave)
+        explicit guard(const callback_t<void> &_enter_fn, const callback_t<void> &_leave_fn)
+            : m_enter_func(_enter_fn), m_leave_func(_leave_fn)
         {
             enter();
         }
-        explicit guard(const callback_t<void> &_leave)
-            : guard(nullptr, _leave)
+        explicit guard(const callback_t<void> &_leave_fn)
+            : guard(nullptr, _leave_fn)
         {
         }
         virtual ~guard()
