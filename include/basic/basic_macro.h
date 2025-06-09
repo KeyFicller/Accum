@@ -61,9 +61,9 @@ public:                                               \
 
 #define MEMBER_DECLARE(_CLASS, _TYPE, _NAME, ...)    \
 public:                                              \
-    _CLASS &set_##_NAME(const _TYPE &_NAME)          \
+    _CLASS &set_##_NAME(const _TYPE &_##_NAME)       \
     {                                                \
-        m_##_NAME = _NAME;                           \
+        m_##_NAME = _##_NAME;                        \
         return *this;                                \
     }                                                \
     const _TYPE &_NAME() const { return m_##_NAME; } \
@@ -74,9 +74,9 @@ protected:                                           \
 
 #define REFERENCE_MEMBER_DECLARE(_CLASS, _TYPE, _NAME) \
 public:                                                \
-    _CLASS &set_##_NAME(const _TYPE &_NAME)            \
+    _CLASS &set_##_NAME(const _TYPE &_##_NAME)         \
     {                                                  \
-        m_##_NAME = _NAME;                             \
+        m_##_NAME = _##_NAME;                          \
         return *this;                                  \
     }                                                  \
     const _TYPE &_NAME() const { return m_##_NAME; }   \

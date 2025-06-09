@@ -1,6 +1,7 @@
 #pragma once
 
 #include "basic_macro.h"
+#include "basic_assert.h"
 
 #include <type_traits>
 
@@ -9,11 +10,18 @@ namespace PRJ_NAME
     template <typename t_facade>
     class implement_t
     {
-        MEMBER_DECLARE(implement_t, t_facade *, facade);
+        using facade_ptr = t_facade*;
+        MEMBER_DECLARE(implement_t, facade_ptr, facade);
 
     public:
         implement_t(t_facade &_facade) : m_facade(&_facade) {}
         virtual ~implement_t() = default;
+
+    public:
+        virtual implement_t* duplicate() const
+        {
+            return const_cast<implement_t*>(this);
+        }
 
     public:
         template <typename t>

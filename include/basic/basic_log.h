@@ -20,58 +20,62 @@ namespace PRJ_NAME
     class BASIC_EXPORT log
     {
         INSTANCE(log, "logger");
-        IMPL_BASE(log);
+        friend class log_impl;
+
+    protected:
+        explicit log(log_impl &_impl) : m_impl(&_impl) {}
+        log_impl *m_impl = nullptr;
 
     public:
         log(const std::string &_name);
         virtual ~log();
 
     public:
-        /// @brief 
-        /// @param _level 
+        /// @brief
+        /// @param _level
         void set_level(int _level);
 
-        /// @brief 
-        /// @return 
+        /// @brief
+        /// @return
         int level() const;
 
-        /// @brief 
-        /// @param _message 
+        /// @brief
+        /// @param _message
         void trace(const std::string &_message);
 
-        /// @brief 
-        /// @param _message 
+        /// @brief
+        /// @param _message
         void info(const std::string &_message);
 
-        /// @brief 
-        /// @param _message 
+        /// @brief
+        /// @param _message
         void warn(const std::string &_message);
 
-        /// @brief 
-        /// @param _message 
+        /// @brief
+        /// @param _message
         void error(const std::string &_message);
 
-        /// @brief 
-        /// @param _message 
+        /// @brief
+        /// @param _message
         void critical(const std::string &_message);
 
-        template <typename ...args>
-        void trace(const std::string& _format, args&&... _args)
+        template <typename... args>
+        void trace(const std::string &_format, args &&..._args)
         {
             return trace(cstyle_format_print(_format.c_str(), std::forward<args>(_args)...));
         }
 
-        template <typename ...args>
-        void error(const std::string& _format, args&&... _args)
+        template <typename... args>
+        void error(const std::string &_format, args &&..._args)
         {
             return error(cstyle_format_print(_format.c_str(), std::forward<args>(_args)...));
         }
     };
-    
+
 }
 
-#define TRACE(...)  ::PRJ_NAME::log::instance().trace(__VA_ARGS__)
-#define INFO(...)  ::PRJ_NAME::log::instance().info(__VA_ARGS__)
-#define WARN(...)  ::PRJ_NAME::log::instance().warn(__VA_ARGS__)
-#define ERROR(...)  ::PRJ_NAME::log::instance().error(__VA_ARGS__)
-#define CRITICAL(...)  ::PRJ_NAME::log::instance().critical(__VA_ARGS__)
+#define TRACE(...) ::PRJ_NAME::log::instance().trace(__VA_ARGS__)
+#define INFO(...) ::PRJ_NAME::log::instance().info(__VA_ARGS__)
+#define WARN(...) ::PRJ_NAME::log::instance().warn(__VA_ARGS__)
+#define ERROR(...) ::PRJ_NAME::log::instance().error(__VA_ARGS__)
+#define CRITICAL(...) ::PRJ_NAME::log::instance().critical(__VA_ARGS__)
