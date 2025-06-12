@@ -18,9 +18,9 @@ namespace PRJ_NAME
         virtual ~implement_t() = default;
 
     public:
-        virtual implement_t* duplicate() const
+        virtual void duplicate_from(const implement_t* _other_impl)
         {
-            return const_cast<implement_t*>(this);
+            //ASSERT(false);
         }
 
     public:

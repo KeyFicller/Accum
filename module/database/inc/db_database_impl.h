@@ -21,6 +21,7 @@ namespace PRJ_NAME
 
     class database_impl : public implement_t<database>
     {
+        IMPL_EXPOSE(database);
         using map_obj = std::map<db_handle, shared<db_object>>;
         MEMBER_DECLARE(database_impl, map_obj, map_db_obj);
         friend class db_object_id_impl;
@@ -35,5 +36,6 @@ namespace PRJ_NAME
         static global_handle_helper &helper();
         bool add_object(db_object *_object, db_object_id &_id);
         bool remove_object(const db_object_id &_id);
+        db_object* get_object(db_handle _handle) const;
     };
 }

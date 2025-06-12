@@ -31,6 +31,7 @@ set_target_properties(${MODULE_NAME} PROPERTIES
 target_include_directories(${MODULE_NAME} PUBLIC
     ${INCLUDE_DIR}/basic
     ${INCLUDE_DIR}/math
+    ${INCLUDE_DIR}/database
     inc
     repository
 
@@ -42,6 +43,7 @@ target_include_directories(${MODULE_NAME} PUBLIC
 target_link_libraries(${MODULE_NAME} PUBLIC
     basic
     math
+    database
 
     gtest
 )

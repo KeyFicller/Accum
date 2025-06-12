@@ -5,3 +5,5 @@
 #include "basic_filer_test.h"
 #include "math_static_vector_test.h"
 #include "math_static_matrix_test.h"
+#include "db_object_id_test.h"
+#include "db_object_test.h"

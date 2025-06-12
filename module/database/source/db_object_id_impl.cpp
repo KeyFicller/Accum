@@ -45,12 +45,20 @@ namespace PRJ_NAME
 
     db_object *db_object_id_impl::open_impl(db_access_mode _mode)
     {
-        ASSERT(false);
-        return nullptr;
+        if (facade()->operator==(db_object_id::k_null))
+            return nullptr;
+        auto &helper = database_impl::helper();
+        auto iter = helper.owner_map().find(handle());
+        if (iter == helper.owner_map().end())
+            return nullptr;
+        if (!helper.alive_databases().count(iter->second))
+            return nullptr;
+
+        return IMPL_GET(database, iter->second)->get_object(handle());
     }
 
-    implement_t<db_object_id> *db_object_id_impl::duplicate() const
+    void db_object_id_impl::duplicate_from(const implement_t<db_object_id>* _other_impl)
     {
-        return new db_object_id_impl(*this);
+        handle() = _other_impl->self_t<db_object_id_impl>()->handle();
     }
 }

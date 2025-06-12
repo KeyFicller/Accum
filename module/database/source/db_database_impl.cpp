@@ -1,5 +1,7 @@
 #include "db_database_impl.h"
 
+#include "db_object_impl.h"
+
 namespace PRJ_NAME
 {
     database_impl::database_impl(database &_facade)
@@ -22,8 +24,12 @@ namespace PRJ_NAME
     {
         bool ret = true;
         auto handle = helper().allocator().next_handle();
+        helper().allocator().insert_handle(handle);
         map_db_obj().insert({handle, shared<db_object>(_object)});
         helper().owner_map().insert({handle, facade()});
+        IMPL_GET(db_object, _object)->set_id(handle);
+        ASSERT(_object->close());
+        _id = db_object_id(handle);
         return ret;
     }
     bool database_impl::remove_object(const db_object_id &_id)
@@ -35,5 +41,9 @@ namespace PRJ_NAME
         map_db_obj().erase(iter);
         helper().owner_map().erase(_id);
         return ret;
+    }
+    db_object *database_impl::get_object(db_handle _handle) const
+    {
+        return map_db_obj().at(_handle).get();
     }
 }

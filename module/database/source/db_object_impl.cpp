@@ -30,6 +30,8 @@ namespace PRJ_NAME
 
     bool db_object_impl::close()
     {
+        if (!id().is_valid())
+            return false;
         if (open_status() != db_open_status::k_closed)
         {
 

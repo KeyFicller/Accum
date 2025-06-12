@@ -33,6 +33,7 @@ namespace PRJ_NAME
         bool is_valid() const;
         operator bool() const;
         bool operator == (const db_object_id& _other) const;
+        db_object_id& operator = (const db_object_id& _other);
         db_handle handle() const;
 
         template <typename t>

@@ -14,7 +14,7 @@ namespace PRJ_NAME
         database();
         virtual ~database();
 
-    protected:
+    public:
         bool add_object(db_object* _object, db_object_id& _id);
         bool remove_object(const db_object_id& _id);
     };

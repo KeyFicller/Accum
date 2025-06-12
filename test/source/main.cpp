@@ -2,6 +2,14 @@
 
 using namespace PRJ_NAME;
 
+void fn(int a = 0)
+{
+
+}
+
+using function_ptr = void(*)(int);
+static std::map<function_ptr, std::string> str_map;
+
 int main(int _argc, char** _argv)
 {
     printf("Running main() from %s\n", __FILE__);

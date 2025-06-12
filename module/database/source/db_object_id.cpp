@@ -14,13 +14,9 @@ namespace PRJ_NAME
     }
 
     db_object_id::db_object_id(const db_object_id &_other)
+        : db_object_id()
     {
-        auto cpy_impl = _other.m_impl->duplicate();
-        if (cpy_impl == m_impl)
-            ASSERT(false);
-
-        auto cpy_facade = this;
-        cpy_impl->set_facade(cpy_facade);
+        IMPL(db_object_id)->duplicate_from(_other.m_impl);
     }
 
     db_object_id::~db_object_id()
@@ -45,8 +41,19 @@ namespace PRJ_NAME
         return IMPL(db_object_id)->operator==(_other);
     }
 
+    db_object_id &db_object_id::operator=(const db_object_id &_other)
+    {
+        IMPL(db_object_id)->duplicate_from(_other.m_impl);
+        return *this;
+    }
+
     db_handle db_object_id::handle() const
     {
         return IMPL(db_object_id)->handle();
+    }
+
+    db_object* db_object_id::open_impl(db_access_mode _mode)
+    {
+        return IMPL(db_object_id)->open_impl(_mode);
     }
 }

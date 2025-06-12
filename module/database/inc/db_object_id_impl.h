@@ -20,6 +20,6 @@ namespace PRJ_NAME
         db_object *open_impl(db_access_mode _mode);
 
     private:
-        implement_t<db_object_id>* duplicate() const override;
+        void duplicate_from(const implement_t<db_object_id>* _other_impl) override;
     };
 }
