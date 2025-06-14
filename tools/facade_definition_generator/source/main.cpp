@@ -1,28 +1,29 @@
+#include <iostream>
+#include <sstream>
 #include <string>
 #include <vector>
-#include <sstream>
-#include <iostream>
 
 #include <iostream>
-#include <vector>
+#include <sstream>
 #include <string>
-#include <sstream>
+#include <vector>
 
-std::vector<std::string> split_by_semicolon(const std::string &_value)
+std::vector<std::string>
+split_by_semicolon(const std::string& _value)
 {
     std::vector<std::string> tokens;
     std::istringstream iss(_value);
     std::string token;
 
-    while (std::getline(iss, token, ';'))
-    {
+    while (std::getline(iss, token, ';')) {
         tokens.push_back(token);
     }
 
     return tokens;
 }
 
-std::string proc_str(const std::string& _declare, const std::string& _class)
+std::string
+proc_str(const std::string& _declare, const std::string& _class)
 {
     auto left_bracket_pos = _declare.find('(');
     auto pre_fix = _declare.substr(0, left_bracket_pos + 1);
@@ -35,7 +36,7 @@ std::string proc_str(const std::string& _declare, const std::string& _class)
     std::vector<std::string> params;
     std::istringstream iss(param_str);
     std::string word;
-    
+
     while (iss >> word) {
         if (!word.empty() && (word[0] == '_' || (word[0] == '&' && word[1] == '_'))) {
             if (word.back() == ')' || word.back() == ',')
@@ -45,7 +46,7 @@ std::string proc_str(const std::string& _declare, const std::string& _class)
             params.push_back(word);
         }
     }
-    
+
     std::string result = pre_fix + param_str;
     result += "\n";
     result += "{\n";
@@ -57,7 +58,7 @@ std::string proc_str(const std::string& _declare, const std::string& _class)
     for (int i = 0; i < params.size(); i++) {
         result += params[i];
         if (i != params.size() - 1)
-        result += ",";
+            result += ",";
     }
     result += ");\n";
     result += "}\n";
@@ -65,8 +66,8 @@ std::string proc_str(const std::string& _declare, const std::string& _class)
     return result;
 }
 
-
-int main()
+int
+main()
 {
     // 类名
     const std::string className = "load_proc";

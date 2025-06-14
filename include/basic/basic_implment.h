@@ -1,72 +1,77 @@
 #pragma once
 
-#include "basic_macro.h"
 #include "basic_assert.h"
+#include "basic_macro.h"
 
 #include <type_traits>
 
-namespace PRJ_NAME
+namespace PRJ_NAME {
+template<typename t_facade>
+class implement_t
 {
-    template <typename t_facade>
-    class implement_t
+    using facade_ptr = t_facade*;
+    MEMBER_DECLARE(implement_t, facade_ptr, facade);
+
+  public:
+    implement_t(t_facade& _facade)
+      : m_facade(&_facade)
     {
-        using facade_ptr = t_facade*;
-        MEMBER_DECLARE(implement_t, facade_ptr, facade);
+    }
+    virtual ~implement_t() = default;
 
-    public:
-        implement_t(t_facade &_facade) : m_facade(&_facade) {}
-        virtual ~implement_t() = default;
+  public:
+    virtual void duplicate_from(const implement_t* _other_impl)
+    {
+        // ASSERT(false);
+    }
 
-    public:
-        virtual void duplicate_from(const implement_t* _other_impl)
-        {
-            //ASSERT(false);
-        }
+  public:
+    template<typename t>
+    const t* self_t() const
+        requires std::is_base_of_v<implement_t, t>
+    {
+        return static_cast<const t*>(this);
+    }
 
-    public:
-        template <typename t>
-        const t *self_t() const
-            requires std::is_base_of_v<implement_t, t>
-        {
-            return static_cast<const t *>(this);
-        }
+    template<typename t>
+    t* self_t()
+        requires std::is_base_of_v<implement_t, t>
+    {
+        return static_cast<t*>(this);
+    }
 
-        template <typename t>
-        t *self_t()
-            requires std::is_base_of_v<implement_t, t>
-        {
-            return static_cast<t *>(this);
-        }
+    template<typename t>
+    const t* facade_t() const
+        requires std::is_base_of_v<t_facade, t>
+    {
+        return static_cast<const t*>(facade());
+    }
 
-        template <typename t>
-        const t *facade_t() const
-            requires std::is_base_of_v<t_facade, t>
-        {
-            return static_cast<const t *>(facade());
-        }
-
-        template <typename t>
-        t *facade_t()
-            requires std::is_base_of_v<t_facade, t>
-        {
-            return static_cast<t *>(facade());
-        }
-    };
+    template<typename t>
+    t* facade_t()
+        requires std::is_base_of_v<t_facade, t>
+    {
+        return static_cast<t*>(facade());
+    }
+};
 }
 
 #define IMPL_CLASS(_CLASS) _CLASS##_impl
 
-#define IMPL_BASE(_CLASS)                                           \
-    friend class IMPL_CLASS(_CLASS);                                \
-                                                                    \
-protected:                                                          \
-    explicit _CLASS(IMPL_CLASS(_CLASS) & _impl) : m_impl(&_impl) {} \
-    IMPL_CLASS(_CLASS) *m_impl = nullptr
+#define IMPL_BASE(_CLASS)                                                                                              \
+    friend class IMPL_CLASS(_CLASS);                                                                                   \
+                                                                                                                       \
+  protected:                                                                                                           \
+    explicit _CLASS(IMPL_CLASS(_CLASS) & _impl)                                                                        \
+      : m_impl(&_impl)                                                                                                 \
+    {                                                                                                                  \
+    }                                                                                                                  \
+    IMPL_CLASS(_CLASS)* m_impl = nullptr
 
-#define IMPL_DERIVED(_CLASS)         \
-    friend class IMPL_CLASS(_CLASS); \
-                                     \
-protected:                           \
+#define IMPL_DERIVED(_CLASS)                                                                                           \
+    friend class IMPL_CLASS(_CLASS);                                                                                   \
+                                                                                                                       \
+  protected:                                                                                                           \
     explicit _CLASS(IMPL_CLASS(_CLASS) & _impl)
 
 #define IMPL_INITIALIZE(_CLASS, ...) m_impl = new IMPL_CLASS(_CLASS)(*this, ##__VA_ARGS__)
@@ -84,9 +89,15 @@ protected:                           \
 #define _FACADE_GET_MACRO(...) EXPAND(_FACADE_GET_MACRO_NAME(__VA_ARGS__, _FACADE_DERIVED, _FACADE_BASE))
 #define FACADE(...) EXPAND(_FACADE_GET_MACRO(_ARGS_AUGUMENTOR(__VA_ARGS__))(__VA_ARGS__))
 
-#define IMPL_EXPOSE(_CLASS)                                                           \
-public:                                                                               \
-    static IMPL_CLASS(_CLASS) * get_impl(_CLASS *_facade) { return _facade->m_impl; } \
-    static const IMPL_CLASS(_CLASS) * get_impl(const _CLASS *_facade) { return _facade->m_impl; }
+#define IMPL_EXPOSE(_CLASS)                                                                                            \
+  public:                                                                                                              \
+    static IMPL_CLASS(_CLASS) * get_impl(_CLASS* _facade)                                                              \
+    {                                                                                                                  \
+        return _facade->m_impl;                                                                                        \
+    }                                                                                                                  \
+    static const IMPL_CLASS(_CLASS) * get_impl(const _CLASS* _facade)                                                  \
+    {                                                                                                                  \
+        return _facade->m_impl;                                                                                        \
+    }
 
 #define IMPL_GET(_CLASS, _FACADE) IMPL_CLASS(_CLASS)::get_impl(_FACADE)

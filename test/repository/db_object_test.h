@@ -1,7 +1,7 @@
 #pragma once
 
-#include "db_object.h"
 #include "db_database.h"
+#include "db_object.h"
 
 #include "gtest/gtest.h"
 
@@ -9,7 +9,7 @@ using namespace PRJ_NAME;
 
 class DBObjectTest : public testing::Test
 {
-protected:
+  protected:
     void SetUp() override
     {
         db = new database();
@@ -24,8 +24,8 @@ protected:
         delete db;
     }
 
-    database *db;
-    db_object *obj;
+    database* db;
+    db_object* obj;
     db_object_id obj_id;
 };
 
@@ -68,7 +68,7 @@ TEST_F(DBObjectTest, TransactionFiler)
 {
     obj->open(db_access_mode::k_xn);
 
-    filer &f = obj->xn_filer();
+    filer& f = obj->xn_filer();
     EXPECT_NE(&f, nullptr);
 
     // 测试filer基本操作
@@ -90,5 +90,5 @@ TEST_F(DBObjectTest, InvalidOperations)
 
     EXPECT_FALSE(invalid_obj.open(db_access_mode::k_read));
     EXPECT_FALSE(invalid_obj.close());
-    //EXPECT_THROW(invalid_obj.xn_filer(), std::exception);
+    // EXPECT_THROW(invalid_obj.xn_filer(), std::exception);
 }

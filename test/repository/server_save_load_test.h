@@ -1,7 +1,7 @@
 #pragma once
 
-#include "server_save_proc.h"
 #include "server_load_proc.h"
+#include "server_save_proc.h"
 
 #include "gtest/gtest.h"
 
@@ -11,10 +11,8 @@ using namespace PRJ_NAME;
 
 class save_load_test : public testing::Test
 {
-protected:
-    void SetUp() override
-    {
-    }
+  protected:
+    void SetUp() override {}
 };
 
 TEST_F(save_load_test, GeneralTest)
@@ -22,10 +20,8 @@ TEST_F(save_load_test, GeneralTest)
     int save_i = 1;
     float save_f = 2.0;
     std::string save_str = "Hello";
-    std::vector<int> save_veci = {2, 4, 5};
-    std::map<std::string, int> save_map = {
-        {"a", 2},
-        {"b", 4}};
+    std::vector<int> save_veci = { 2, 4, 5 };
+    std::map<std::string, int> save_map = { { "a", 2 }, { "b", 4 } };
     {
 
         save_proc proc(TEST_FILE);

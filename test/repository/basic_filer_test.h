@@ -8,7 +8,7 @@ using namespace PRJ_NAME;
 
 class FilerTest : public testing::Test
 {
-protected:
+  protected:
     filer f;
 
     void SetUp() override
@@ -73,7 +73,7 @@ TEST_F(FilerTest, PositionAndSeek)
 
 TEST_F(FilerTest, ReadWriteBytes)
 {
-    const char buffer[] = {0x01, 0x02, 0x03, 0x04, 0x05};
+    const char buffer[] = { 0x01, 0x02, 0x03, 0x04, 0x05 };
     const int size = sizeof(buffer);
 
     // Write raw bytes
@@ -85,8 +85,7 @@ TEST_F(FilerTest, ReadWriteBytes)
     f.seek(0);
     f.read_bytes(in_buffer, size);
 
-    for (int i = 0; i < size; i++)
-    {
+    for (int i = 0; i < size; i++) {
         EXPECT_EQ(in_buffer[i], buffer[i]);
     }
 }
@@ -133,23 +132,17 @@ struct Point
     float x, y;
 };
 // Register serializer for custom type
-template <>
+template<>
 struct filer_serializer<Point>
 {
-    static void dump(filer &f, const Point &p)
-    {
-        f << p.x << p.y;
-    }
+    static void dump(filer& f, const Point& p) { f << p.x << p.y; }
 
-    static void load(filer &f, Point &p)
-    {
-        f >> p.x >> p.y;
-    }
+    static void load(filer& f, Point& p) { f >> p.x >> p.y; }
 };
 
 TEST_F(FilerTest, ComplexDataTypes)
 {
-    Point out_point{1.5f, 2.5f};
+    Point out_point{ 1.5f, 2.5f };
     f << out_point;
 
     f.seek(0);

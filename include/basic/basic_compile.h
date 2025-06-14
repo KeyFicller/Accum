@@ -1,6 +1,5 @@
 #pragma once
 
-
 #ifdef _MSC_VER
 #pragma message("Compiling with MSVC")
 #define COMILER_STRING "msvc"
