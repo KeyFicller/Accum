@@ -84,13 +84,25 @@ operator<<(save_proc& _proc, const std::set<t>& _value)
 
 template<typename t1, typename t2>
 inline save_proc&
+operator<<(save_proc& _proc, const std::pair<t1, t2>& _value)
+{
+    _proc << save_proc_flow::k_begin_map;
+
+    _proc << save_proc_flow::k_in_key << _SAVE_LOAD_PROC_INTERNAL_1 << save_proc_flow::k_in_value << _value.first;
+    _proc << save_proc_flow::k_in_key << _SAVE_LOAD_PROC_INTERNAL_2 << save_proc_flow::k_in_value << _value.second;
+
+    _proc << save_proc_flow::k_end_map;
+
+    return _proc;
+}
+
+template<typename t1, typename t2>
+inline save_proc&
 operator<<(save_proc& _proc, const std::map<t1, t2>& _value)
 {
     _proc << save_proc_flow::k_begin_seq;
     for (const auto& pair : _value) {
-        _proc << save_proc_flow::k_begin_map << save_proc_flow::k_in_key << _SAVE_LOAD_PROC_INTERNAL_1
-              << save_proc_flow::k_in_value << pair.first << save_proc_flow::k_in_key << _SAVE_LOAD_PROC_INTERNAL_2
-              << save_proc_flow::k_in_value << pair.second << save_proc_flow::k_end_map;
+        _proc << pair;
     }
 
     _proc << save_proc_flow::k_end_seq;
@@ -127,3 +139,7 @@ operator<<(save_proc& _proc, const save_proc_flow& _value)
     return _proc;
 }
 } // namespace PRJ_NAME
+
+#define SAVE_PROC(_PROC, _KEY, _VALUE) _PROC << save_proc_flow::k_in_key << _KEY << save_proc_flow::k_in_value << _VALUE
+#define SAVE_MAP_SCOPE(_PROC)                                                                                          \
+    GUARD([&]() { _PROC << save_proc_flow::k_begin_map; }, [&]() { _PROC << save_proc_flow::k_end_map; })

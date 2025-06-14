@@ -7,6 +7,8 @@ load_proc_flow shd_begin_seq = load_proc_flow::k_begin_seq;
 load_proc_flow shd_end_seq = load_proc_flow::k_end_seq;
 load_proc_flow shd_out_key = load_proc_flow::k_out_key;
 load_proc_flow shd_out_value = load_proc_flow::k_out_value;
+load_proc_flow shd_begin_map = load_proc_flow::k_begin_map;
+load_proc_flow shd_end_map = load_proc_flow::k_end_map;
 
 load_proc::load_proc(const std::string& _file)
   : save_load_proc(*new load_proc_impl(*this, _file))
@@ -47,6 +49,17 @@ void
 load_proc::out_value()
 {
     // return IMPL(load_proc)->out_value();
+}
+
+void
+load_proc::begin_map()
+{
+    return IMPL(load_proc)->begin_map();
+}
+void
+load_proc::end_map()
+{
+    return IMPL(load_proc)->end_map();
 }
 
 void

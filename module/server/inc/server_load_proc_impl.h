@@ -30,6 +30,8 @@ class load_proc_impl : public save_load_proc_impl
   public:
     bool begin();
     bool end();
+    void begin_map();
+    void end_map();
     void begin_sequence();
     void end_sequence();
     void out_key();

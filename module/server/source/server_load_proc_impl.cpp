@@ -45,6 +45,17 @@ load_proc_impl::end_sequence()
     m_pipeline.pop();
 }
 
+void
+load_proc_impl::begin_map()
+{
+}
+
+void
+load_proc_impl::end_map()
+{
+    m_pipeline.pop();
+}
+
 bool
 load_proc_impl::has_value() const
 {

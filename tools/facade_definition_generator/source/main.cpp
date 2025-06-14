@@ -47,7 +47,7 @@ proc_str(const std::string& _declare, const std::string& _class)
         }
     }
 
-    std::string result = pre_fix + param_str;
+    std::string result = pre_fix + _declare.substr(left_bracket_pos + 1, _declare.size() - left_bracket_pos - 1);
     result += "\n";
     result += "{\n";
     result += "    return IMPL(";

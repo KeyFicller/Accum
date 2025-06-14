@@ -26,11 +26,11 @@ TEST_F(save_load_test, GeneralTest)
 
         save_proc proc(TEST_FILE);
         proc.begin();
-        proc << save_proc_flow::k_in_key << "Int" << save_proc_flow::k_in_value << save_i;
-        proc << save_proc_flow::k_in_key << "Float" << save_proc_flow::k_in_value << save_f;
-        proc << save_proc_flow::k_in_key << "String" << save_proc_flow::k_in_value << save_str;
-        proc << save_proc_flow::k_in_key << "Vector" << save_proc_flow::k_in_value << save_veci;
-        proc << save_proc_flow::k_in_key << "Map" << save_proc_flow::k_in_value << save_map;
+        SAVE_PROC(proc, "Int", save_i);
+        SAVE_PROC(proc, "Float", save_f);
+        SAVE_PROC(proc, "String", save_str);
+        SAVE_PROC(proc, "Vector", save_veci);
+        SAVE_PROC(proc, "Map", save_map);
         proc.end();
     }
 
@@ -43,11 +43,11 @@ TEST_F(save_load_test, GeneralTest)
 
         load_proc proc(TEST_FILE);
         proc.begin();
-        proc >> shd_out_key >> "Int" >> shd_out_value >> load_i;
-        proc >> shd_out_key >> "Float" >> shd_out_value >> load_f;
-        proc >> shd_out_key >> "String" >> shd_out_value >> load_str;
-        proc >> shd_out_key >> "Vector" >> shd_out_value >> load_veci;
-        proc >> shd_out_key >> "Map" >> shd_out_value >> load_map;
+        LOAD_PROC(proc, "Int", load_i);
+        LOAD_PROC(proc, "Float", load_f);
+        LOAD_PROC(proc, "String", load_str);
+        LOAD_PROC(proc, "Vector", load_veci);
+        LOAD_PROC(proc, "Map", load_map);
         proc.end();
     }
 
