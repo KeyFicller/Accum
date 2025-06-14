@@ -1,5 +1,6 @@
 #pragma once
 
+#include "math_include.h"
 #include "server_save_load.h"
 
 #include <map>
@@ -157,6 +158,21 @@ operator>>(load_proc& _proc, std::map<t1, t2>& _value)
     return _proc;
 }
 
+template<typename t, unsigned n>
+inline load_proc&
+operator>>(load_proc& _proc, vec_impl_t<t, n>& _value)
+{
+    _proc >> shd_begin_seq;
+
+    int index = 0;
+    while (_proc.has_value()) {
+        _proc >> _value[index++];
+    }
+
+    _proc >> shd_end_seq;
+
+    return _proc;
+}
 }
 
 #define LOAD_PROC(_PROC, _KEY, _VALUE) _PROC >> shd_out_key >> _KEY >> shd_out_value >> _VALUE

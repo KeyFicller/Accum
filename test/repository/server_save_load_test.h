@@ -57,3 +57,24 @@ TEST_F(save_load_test, GeneralTest)
     EXPECT_EQ(save_veci, load_veci);
     EXPECT_EQ(save_map, load_map);
 }
+
+TEST_F(save_load_test, TemplateSpecialization)
+{
+    vec3_i save_i = { 4, 6, 7 };
+    {
+        save_proc proc(TEST_FILE);
+        proc.begin();
+        SAVE_PROC(proc, "Vector3", save_i);
+        proc.end();
+    }
+
+    vec3_i load_i;
+    {
+        load_proc proc(TEST_FILE);
+        proc.begin();
+        LOAD_PROC(proc, "Vector3", load_i);
+        proc.end();
+    }
+
+    EXPECT_EQ(save_i, load_i);
+}

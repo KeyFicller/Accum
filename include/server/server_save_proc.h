@@ -4,6 +4,7 @@
 #include <set>
 #include <type_traits>
 
+#include "math_include.h"
 #include "server_save_load.h"
 
 namespace PRJ_NAME {
@@ -106,6 +107,18 @@ operator<<(save_proc& _proc, const std::map<t1, t2>& _value)
     }
 
     _proc << save_proc_flow::k_end_seq;
+    return _proc;
+}
+
+template<typename t, unsigned n>
+inline save_proc&
+operator<<(save_proc& _proc, const vec_impl_t<t, n>& _value)
+{
+    _proc << save_proc_flow::k_begin_seq_flow;
+    for (unsigned i = 0; i < n; i++)
+        _proc << _value[i];
+    _proc << save_proc_flow::k_end_seq;
+
     return _proc;
 }
 

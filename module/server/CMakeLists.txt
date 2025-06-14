@@ -33,6 +33,7 @@ target_include_directories(${MODULE_NAME} PUBLIC
     inc
 
     ${INCLUDE_DIR}/basic
+    ${INCLUDE_DIR}/math
 
     ${THIRD_DIR}/yaml-cpp/include
 )
@@ -40,6 +41,7 @@ target_include_directories(${MODULE_NAME} PUBLIC
 # set the link dependencies of the module
 target_link_libraries(${MODULE_NAME} PUBLIC
     basic
+    math
     yaml-cpp
 )
 
