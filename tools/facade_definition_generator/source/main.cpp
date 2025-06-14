@@ -37,9 +37,11 @@ std::string proc_str(const std::string& _declare, const std::string& _class)
     std::string word;
     
     while (iss >> word) {
-        if (!word.empty() && word[0] == '_') {
+        if (!word.empty() && (word[0] == '_' || (word[0] == '&' && word[1] == '_'))) {
             if (word.back() == ')' || word.back() == ',')
                 word.pop_back();
+            if (word.front() == '&')
+                word.erase(word.begin());
             params.push_back(word);
         }
     }
@@ -57,7 +59,7 @@ std::string proc_str(const std::string& _declare, const std::string& _class)
         if (i != params.size() - 1)
         result += ",";
     }
-    result += ")\n";
+    result += ");\n";
     result += "}\n";
 
     return result;
@@ -67,21 +69,24 @@ std::string proc_str(const std::string& _declare, const std::string& _class)
 int main()
 {
     // 类名
-    const std::string className = "save_proc";
+    const std::string className = "load_proc";
 
     // 函数声明列表
-    const std::string declarations = R"(bool begin() override;
-        bool end() override;
+    const std::string declarations = R"(bool begin();
+        bool end();
         void begin_map();
         void end_map();
-        void begin_sequence(bool _flow = false);
+        void begin_sequence();
         void end_sequence();
-        void in_key();
-        void in_value();
-        void in(const std::string& _value);
-        void in(int _value);
-        void in(float _value);
-        void in(bool _value);)";
+        void out_key();
+        void out_value();
+        void out(std::string &_value);
+        void out(const std::string &_value);
+        void out(int &_value);
+        void out(float &_value);
+        void out(bool &_value);
+        bool has_value() const;
+        bool has_key(const std::string& _value) const;)";
 
     std::vector<std::string> tokens = split_by_semicolon(declarations);
 

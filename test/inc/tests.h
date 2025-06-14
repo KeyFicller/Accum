@@ -7,3 +7,4 @@
 #include "math_static_matrix_test.h"
 #include "db_object_id_test.h"
 #include "db_object_test.h"
+#include "server_save_load_test.h"

@@ -4,6 +4,9 @@
 
 #include "basic_include.h"
 
+#define _SAVE_LOAD_PROC_INTERNAL_1 "___KEY"
+#define _SAVE_LOAD_PROC_INTERNAL_2 "___VALUE"
+
 namespace PRJ_NAME
 {
     class save_proc;

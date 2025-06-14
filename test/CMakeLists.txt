@@ -32,6 +32,7 @@ target_include_directories(${MODULE_NAME} PUBLIC
     ${INCLUDE_DIR}/basic
     ${INCLUDE_DIR}/math
     ${INCLUDE_DIR}/database
+    ${INCLUDE_DIR}/server
     inc
     repository
 
@@ -44,6 +45,7 @@ target_link_libraries(${MODULE_NAME} PUBLIC
     basic
     math
     database
+    server
 
     gtest
 )
