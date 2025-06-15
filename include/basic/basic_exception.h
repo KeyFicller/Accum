@@ -1,6 +1,6 @@
 #pragma once
 
-#include "basic_log.h"
+#include "basic_printer.h"
 
 namespace PRJ_NAME {
 enum exception_type : long long
@@ -10,7 +10,7 @@ enum exception_type : long long
     //
 };
 
-class exception : public std::exception
+class BASIC_EXPORT exception : public std::exception
 {
     MEMBER_DECLARE(exception, exception_type, type);
 
@@ -18,7 +18,7 @@ class exception : public std::exception
     template<typename... args>
     exception(exception_type _type, args&&... _args)
       : m_type(_type)
-      , std::exception(cstyle_format_print(std::forward<args>(_args)...))
+      , std::exception(format_print(std::forward<args>(_args)...))
     {
     }
     ~exception() override = default;

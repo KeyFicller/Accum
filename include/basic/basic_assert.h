@@ -36,10 +36,10 @@
     } while (0)
 
 #define _ASSERT_WITH_MESSAGE(_CONDITION, _FORMAT, ...)                                                                 \
-    _ASSERT_INTERNAL(_CONDITION, std::string("Assertion failed: ") + std::string(_FORMAT), __VA_ARGS__)
+    _ASSERT_INTERNAL(_CONDITION, std::string("Assertion failed: ") + std::string(_FORMAT), ##__VA_ARGS__)
 #define _ASSERT_WITHOUT_MESSAGE(_CONDITION)                                                                            \
     _ASSERT_INTERNAL(_CONDITION,                                                                                       \
-                     "Assertion failed: '%s' at file(%s): line(%d).",                                                  \
+                     "Assertion failed: '[0]' at file([1]]): line([2]).",                                              \
                      #_CONDITION,                                                                                      \
                      std::filesystem::path(__FILE__).filename().string().c_str(),                                      \
                      __LINE__)

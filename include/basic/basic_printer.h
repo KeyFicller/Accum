@@ -1,9 +1,9 @@
 #pragma once
 
-#include "basic_assert.h"
 #include "basic_macro.h"
 #include "basic_prompts.h"
 
+#include <concepts>
 #include <sstream>
 #include <string>
 #include <type_traits>
@@ -63,24 +63,6 @@ print<prompt_id>(const prompt_id& _value)
     return prompt(_value);
 }
 
-template<typename... args>
-inline std::string
-format_print(const std::string& _format, args&&... _args)
-{
-    std::string buffer = _format;
-    format_print_impl<0>(buffer, std::forward<args&&>(_args)...);
-    return buffer;
-}
-
-template<typename... args>
-inline std::string
-format_print(const prompt_id& _prompt_id, args&&... _args)
-{
-    std::string buffer = print(_prompt_id);
-    format_print_impl<0>(buffer, std::forward<args&&>(_args)...);
-    return buffer;
-}
-
 template<unsigned n>
 inline void
 format_print_impl(std::string& _buffer)
@@ -103,9 +85,25 @@ format_print_impl(std::string& _buffer, arg&& _arg, args&&... _args)
         start_pos += to.length();
     }
 
-    if (!replaced)
-        ASSERT(false);
-
     format_print_impl<n + 1>(_buffer, std::forward<args&&>(_args)...);
 }
+
+template<typename... args>
+inline std::string
+format_print(const std::string& _format, args&&... _args)
+{
+    std::string buffer = _format;
+    format_print_impl<0>(buffer, std::forward<args&&>(_args)...);
+    return buffer;
+}
+
+template<typename... args>
+inline std::string
+format_print(const prompt_id& _prompt_id, args&&... _args)
+{
+    std::string buffer = print(_prompt_id);
+    format_print_impl<0>(buffer, std::forward<args&&>(_args)...);
+    return buffer;
+}
+
 }

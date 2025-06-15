@@ -1,5 +1,6 @@
 #pragma once
 
+#include "basic_log.h"
 #include "basic_printer.h"
 
 #include "gtest/gtest.h"

@@ -25,6 +25,6 @@ template<typename t, typename... args>
 shared<t>
 make_shared(args&&... _args)
 {
-    return std::make_unique<t>(std::forward<args&&>(_args)...);
+    return std::make_shared<t>(std::forward<args&&>(_args)...);
 }
 }

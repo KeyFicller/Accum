@@ -18,6 +18,7 @@ load_proc_impl::begin()
     ss << fin.rdbuf();
     fin.close();
     m_pipeline.push({ false, YAML::Load(ss.str()) });
+    return true;
 }
 
 bool
@@ -25,6 +26,7 @@ load_proc_impl::end()
 {
     ASSERT(m_pipeline.size() == 1);
     m_pipeline.pop();
+    return true;
 }
 
 void

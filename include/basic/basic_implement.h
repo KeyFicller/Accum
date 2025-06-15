@@ -1,8 +1,9 @@
 #pragma once
 
 #include "basic_assert.h"
-#include "basic_macro.h"
+#include "basic_log.h"
 
+#include <exception>
 #include <type_traits>
 
 namespace PRJ_NAME {
@@ -20,10 +21,7 @@ class implement_t
     virtual ~implement_t() = default;
 
   public:
-    virtual void duplicate_from(const implement_t* _other_impl)
-    {
-        // ASSERT(false);
-    }
+    virtual void duplicate_from(const implement_t* _other_impl) { throw std::exception(); }
 
   public:
     template<typename t>

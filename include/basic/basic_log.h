@@ -1,7 +1,8 @@
 #pragma once
 
 #include "basic_export.h"
-#include "basic_implment.h"
+#include "basic_implement.h"
+#include "basic_printer.h"
 
 #include <string>
 
@@ -9,7 +10,7 @@ namespace PRJ_NAME {
 class log_impl;
 
 template<typename... args>
-std::string
+inline std::string
 cstyle_format_print(const char* _format, args&&... _args)
 {
     char buffer[PRINTER_BUFFER_SIZE];
@@ -65,13 +66,31 @@ class BASIC_EXPORT log
     template<typename... args>
     void trace(const std::string& _format, args&&... _args)
     {
-        return trace(cstyle_format_print(_format.c_str(), std::forward<args>(_args)...));
+        return trace(format_print(_format.c_str(), std::forward<args>(_args)...));
+    }
+
+    template<typename... args>
+    void info(const std::string& _format, args&&... _args)
+    {
+        return info(format_print(_format.c_str(), std::forward<args>(_args)...));
+    }
+
+    template<typename... args>
+    void warn(const std::string& _format, args&&... _args)
+    {
+        return warn(format_print(_format.c_str(), std::forward<args>(_args)...));
     }
 
     template<typename... args>
     void error(const std::string& _format, args&&... _args)
     {
-        return error(cstyle_format_print(_format.c_str(), std::forward<args>(_args)...));
+        return error(format_print(_format.c_str(), std::forward<args>(_args)...));
+    }
+
+    template<typename... args>
+    void critical(const std::string& _format, args&&... _args)
+    {
+        return critical(format_print(_format.c_str(), std::forward<args>(_args)...));
     }
 };
 
