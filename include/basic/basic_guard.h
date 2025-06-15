@@ -4,33 +4,46 @@
 #include "basic_export.h"
 
 namespace PRJ_NAME {
+/// @brief This class provides the ability to do something when exiting current scope.
 class guard
 {
     MEMBER_DECLARE(guard, callback_t<void>, enter_func);
     MEMBER_DECLARE(guard, callback_t<void>, leave_func);
 
   public:
+    /// @brief Construtor.
+    /// @param _enter_fn Function been executed initializing the guard.
+    /// @param _leave_fn Function been executed leaving current scope.
     explicit guard(const callback_t<void>& _enter_fn, const callback_t<void>& _leave_fn)
       : m_enter_func(_enter_fn)
       , m_leave_func(_leave_fn)
     {
         enter();
     }
+
+    /// @brief Constructor.
+    /// @param _leave_fn Function been executed leaving current scope.
     explicit guard(const callback_t<void>& _leave_fn)
       : guard(nullptr, _leave_fn)
     {
     }
+
+    /// @brief Destructor.
     virtual ~guard() { leave(); }
 
   public:
+    /// @brief Tell the guard not to execute leave function anymore.
     void dismiss() { set_leave_func(nullptr); }
 
   private:
+    /// @brief Entering a scope.
     void enter()
     {
         if (enter_func())
             enter_func()();
     }
+
+    /// @brief Leaving a scope.
     void leave()
     {
         if (leave_func())
@@ -38,6 +51,8 @@ class guard
     }
 };
 
+/// @brief This class provides the ability to restore some data when exiting current scope.
+/// @tparam t Type of data.
 template<typename t>
 class value_reverter : public guard
 {
@@ -45,12 +60,18 @@ class value_reverter : public guard
     MEMBER_DECLARE(value_reverter, t, record);
 
   public:
+    /// @brief Constructor.
+    /// @param _value Data to be restored.
     explicit value_reverter(t& _value)
       : guard(std::bind(&value_reverter::revert, this))
       , m_value(_value)
       , m_record(_value)
     {
     }
+
+    /// @brief Constructor.
+    /// @param _value Data to be restored.
+    /// @param _init Data to be initialized at present.
     explicit value_reverter(t& _value, const t& _init)
       : guard(std::bind(&value_reverter::revert, this))
       , m_value(_value)
@@ -60,6 +81,7 @@ class value_reverter : public guard
     }
 
   private:
+    /// @brief Revert data.
     void revert() { value() = record(); }
 };
 }
